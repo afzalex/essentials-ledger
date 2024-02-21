@@ -31,3 +31,13 @@ body {
     text-wrap: balance;
   }
 }
+
+body {
+  height: 100vh;
+}
+body.iphone-body {
+  height: 89vh;
+}
+body main {
+  height: 100%;
+}

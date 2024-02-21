@@ -1,0 +1,42 @@
+name: Deployment
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+      with: 
+        ref: prod
+        fetch-depth: 0
+        token: ${{ secrets.EL_GITHUB_TOKEN }}
+
+    - name: Use Node.js 21.x
+      uses: actions/setup-node@v3
+      with:
+        node-version: 21.x
+
+    - name: Build
+      run: |
+        git reset --hard origin/main
+        npm install
+        npm run build
+        rm -rf docs
+        cp -rf out docs
+        ls -la docs
+        
+    - name: Push prod
+      run: |
+        git config advice.addIgnoredFile false
+        git config user.email "afzalex.store@gmail.com"
+        git config user.name "fzbot"
+        git add docs
+        currdate="$(date +%d-%m-%Y)-$(( $(date +%s) - $(date -d "$(date +%Y-%m-%d) 00:00:00" +%s) ))"
+        git commit -m "deployment-${currdate}"
+        git push -f
