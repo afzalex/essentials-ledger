@@ -22,9 +22,16 @@ jobs:
       with:
         node-version: 21.x
 
-    - name: Build
+    - name: Pre-build
       run: |
         git reset --hard origin/main
+        cd utils
+        node updateNextConfigForProd.js "essentials-ledger"
+        cd ..
+        cat next.config.mjs
+
+    - name: Build
+      run: |
         npm install
         npm run build
         rm -rf docs
