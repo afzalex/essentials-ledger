@@ -16,18 +16,20 @@ import setCachedData, { getCachedData } from '@/utils/cacheUtils';
 import moment from 'moment';
 import Image from 'next/image';
 
-(function () {
-  function isRunningOnIphone() {
-    return /iPhone/.test(navigator.userAgent) || /iPhone/.test(navigator.platform);
-  }
-  function isRunningOnChrome() {
+if ((typeof navigator !== 'undefined')) {
+  (function () {
+    function isRunningOnIphone() {
+      return /iPhone/.test(navigator.userAgent) || /iPhone/.test(navigator.platform);
+    }
+    function isRunningOnChrome() {
 
-  }
+    }
 
-  if (isRunningOnIphone()) {
-    document.querySelector('body')?.classList.add('iphone-body')
-  }
-})()
+    if (isRunningOnIphone()) {
+      document.querySelector('body')?.classList.add('iphone-body')
+    }
+  })()
+}
 
 export default function Home() {
   const [error, setError] = useState<string | null>(null)
