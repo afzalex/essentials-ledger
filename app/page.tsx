@@ -43,12 +43,16 @@ export default function Home() {
   }
 
   useEffect(() => {
-    getCachedData('essentials-url', async () => getEssentialsUrl(), 60*60*24*30, keyInfo.updatedTimestamp !== getCachedData('essentials-url-recorded-timestamp'))
-      .then((url: string) => {
-        setCachedData('essentials-url-recorded-timestamp', keyInfo.updatedTimestamp)
-        setEssentialsUrl(url)
-      });
+    updatePassword(keyInfo.updatedTimestamp !== getCachedData('essentials-url-recorded-timestamp'))
   }, [])
+
+  function updatePassword(doForceUpdate=false) {
+    getCachedData('essentials-url', async () => getEssentialsUrl(), 60*60*24*30, doForceUpdate)
+    .then((url: string) => {
+      setCachedData('essentials-url-recorded-timestamp', keyInfo.updatedTimestamp)
+      setEssentialsUrl(url)
+    });
+  }
 
   return (<>
     <LocalizationProvider dateAdapter={AdapterMoment} >
@@ -65,8 +69,12 @@ export default function Home() {
               Essentials Tracker
             </Typography>
             <img alt="Splashscreen" src="splashscreen.png" />
+            <Button variant='text' size='small' onClick={e => updatePassword(true)} >Update Password</Button>
           </div>
-          <Typography variant="caption" className="p-5">Made by Afzal</Typography>
+          <div className='relative w-full text-center'>
+            <Typography variant="caption" className="p-5">Made by Afzal</Typography>
+            <Typography variant="caption" className="p-0 absolute right-0 bottom-0">halwa</Typography>              
+          </div>
         </div>
       }
       {essentialsUrl &&
