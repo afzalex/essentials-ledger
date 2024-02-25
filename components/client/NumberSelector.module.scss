@@ -1,8 +1,8 @@
-$display-color: #1565c0;
+$display-color: #1876d8;
 $numcontainer-color: beige;
 
 .numContainer {
-    background-color: $numcontainer-color;
+    // background-color: $numcontainer-color;
     position: relative;
     // overflow: hidden;
 
@@ -37,15 +37,52 @@ $numcontainer-color: beige;
         }
     };
 
+
+
     .rowswrapper {
         overflow: hidden;
+        display: flex;
+        flex-direction: column;
+
+        $cell-border-color: rgba(25, 118, 210, 0.7);
 
         .numRow {
+            display: flex;
             transition: opacity 0.2s ease;
             opacity: 0;
             visibility: hidden;
             font-size: 0.75rem;
             z-index: 2;
+            height: 3rem;
+            border-bottom: 1px solid $cell-border-color;
+            border-top: 1px solid $cell-border-color;
+            &:last-child {
+                border-bottom: 0;
+            }
+            &:first-child {
+                border-top: 0;
+            }
+
+            ul {
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
+                width: 100%;
+
+                li {
+                    flex: 1 1 auto;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    text-align: center;
+                    height: 100%;
+                    border-right: 1px solid $cell-border-color;
+                    &:last-child {
+                        border-right: 0;
+                    }
+                }
+            }
 
             &[data-isactive=true] {
                 visibility: visible;
@@ -57,14 +94,6 @@ $numcontainer-color: beige;
                 opacity: 0.2;
             }
 
-            $cell-border-color: rgba(25, 118, 210, 0.7);
-            li {
-                border-right: 1px solid $cell-border-color;
-                border-bottom: 1px solid $cell-border-color;
-                &:last-child {
-                    border-right: 0;
-                }
-            }
         }
     }
 }

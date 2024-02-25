@@ -40,7 +40,7 @@ export default function EssentialsFeed({ showError = msg => { }, setProcessing =
         }
         setSpendingType(getCachedData('spending-type', spendingType))
         setAmount(getCachedData('amount', amount || 0));
-        setRecommendedAmounts(getCachedData('recommended-amounts', [0, 10, 50, 100, 200, 500, 1000, 2000, 5000]))
+        setRecommendedAmounts([0, 10, 50, 100, 200, 500, 1000, 2000])
     }, []);
 
     if (isSubmitted) return <ThankYou setIsSubmitted={setIsSubmitted} />
@@ -202,21 +202,19 @@ function NumberSelector({onChange}) {
             <div className={styles.arrow}></div>
         </div>
         {showDisplay}
-        <div className={styles.rowswrapper}>
-            <div ref={numRowContainerRef} onTouchEnd={touchEnd} >
-                {numRowNumbers.map((numbers, index) => <NumberSelectorRow
-                    key={index}
-                    id={index}
-                    numRowHandlersRef={numRowHandlersRef}
-                    numbersArrayRef={numbersArrayRef}
-                    onActive={onNumElementActiveTouch}
-                    onPartActive={onNumElementPartActiveTouch}
-                    numbers={numbers}
-                    isActive={index === activeIndex}
-                    isPartNextActive={index === nextPartiallyActiveIndex}
-                    isPartPrevActive={index === prevPartiallyActiveIndex}
-                />)}
-            </div>
+        <div ref={numRowContainerRef} className={styles.rowswrapper} onTouchEnd={touchEnd} >
+            {numRowNumbers.map((numbers, index) => <NumberSelectorRow
+                key={index}
+                id={index}
+                numRowHandlersRef={numRowHandlersRef}
+                numbersArrayRef={numbersArrayRef}
+                onActive={onNumElementActiveTouch}
+                onPartActive={onNumElementPartActiveTouch}
+                numbers={numbers}
+                isActive={index === activeIndex}
+                isPartNextActive={index === nextPartiallyActiveIndex}
+                isPartPrevActive={index === prevPartiallyActiveIndex}
+            />)}
         </div>
     </div>
 }
@@ -251,8 +249,8 @@ function NumberSelectorRow({ id, onActive, onPartActive, numbers, numRowHandlers
     }, [isActive, isPartNextActive, isPartPrevActive])
 
     return <div className={`${styles.numRow} `} data-isactive={isActive} data-ispartprevactive={isPartPrevActive} data-ispartnextactive={isPartNextActive} ref={containerRef}>
-        <ul className="flex">
-            {numbers.map((amountValue, i) => <li key={i} data-index={i} className="w-20 py-1 text-center">
+        <ul>
+            {numbers.map((amountValue, i) => <li key={i} data-index={i} >
                 { (numbersArrayRef.current[id-1]?numbersArrayRef.current[id-1]:0) + amountValue }
             </li>)}
         </ul>
