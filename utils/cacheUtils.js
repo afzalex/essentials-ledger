@@ -14,7 +14,7 @@ export function getCachedData(key, newValue, invalidateSeconds = 10 * 1000, doFo
     const storedValue = localStorage.getItem(key);
     if (!doForceUpdate && storedValue) {
         let storedValueTimestamp = localStorage.getItem(keyTimestampKey(key))
-        console.log(key, storedValueTimestamp, moment().diff(storedValueTimestamp, 'seconds'), storedValue)
+        // console.log(key, storedValueTimestamp, moment().diff(storedValueTimestamp, 'seconds'), storedValue)
         if (storedValueTimestamp && moment().diff(storedValueTimestamp, 'seconds') < invalidateSeconds) {
             cachedValue = JSON.parse(storedValue);
         }

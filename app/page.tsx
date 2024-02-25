@@ -5,7 +5,8 @@ import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 
-import EssentialsFeed from '@/components/client/EssentialsFeed'
+// import EssentialsFeed from '@/components/client/EssentialsFeed'
+import EssentialsFeed from '@/components/client/EssentialsFeedV2'
 import { Alert, Backdrop, Button, CircularProgress, Typography } from '@mui/material';
 import CryptoJS from 'crypto-js'
 import { LocalizationProvider } from '@mui/x-date-pickers';
@@ -63,7 +64,7 @@ export default function Home() {
         <CircularProgress />
       </Backdrop>
       {showSplashscreen &&
-        <div className="fixed flex flex-col justify-center items-center h-screen bg-white text-black">
+        <div className="fixed flex flex-col justify-center items-center h-screen bg-white text-black z-50"> 
           <div className="flex flex-col justify-center items-center grow">
             <Typography variant="h4" fontWeight={700}>
               Essentials Tracker
@@ -72,8 +73,7 @@ export default function Home() {
             <Button variant='text' size='small' onClick={e => updatePassword(true)} >Update Password</Button>
           </div>
           <div className='relative w-full text-center'>
-            <Typography variant="caption" className="p-5">Made by Afzal</Typography>
-            <Typography variant="caption" className="p-0 absolute right-0 bottom-0">halwa</Typography>              
+            <Typography variant="caption" className="p-5">Made by Afzal</Typography>             
           </div>
         </div>
       }

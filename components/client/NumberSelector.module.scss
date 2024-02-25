@@ -1,0 +1,70 @@
+$display-color: #1565c0;
+$numcontainer-color: beige;
+
+.numContainer {
+    background-color: $numcontainer-color;
+    position: relative;
+    // overflow: hidden;
+
+    .numdisplay {
+        background-color: $display-color;
+        color: white;
+        position: absolute;
+        top: 0;
+        height: 25px;
+        min-width: 100px;
+        text-align: center;
+        padding: 0px 5px 0px;
+        vertical-align: middle;
+        border-radius: 5px;
+        margin-top: -35px;
+        box-shadow: -2px 2px 2px 0 rgba(0, 0, 0, 0.4);
+
+        ::after{
+            content: "";
+            position: absolute;
+            width: 0;
+            height: 0;
+            left: 40px;
+            box-sizing: border-box;
+            
+            border: 7px solid black;
+            border-color: transparent transparent $display-color $display-color;
+            
+            transform-origin: 0 0;
+            transform: rotate(-45deg);
+            box-shadow: -2px 2px 2px 0 rgba(0, 0, 0, 0.4);
+        }
+    };
+
+    .rowswrapper {
+        overflow: hidden;
+
+        .numRow {
+            transition: opacity 0.2s ease;
+            opacity: 0;
+            visibility: hidden;
+            font-size: 0.75rem;
+            z-index: 2;
+
+            &[data-isactive=true] {
+                visibility: visible;
+                opacity: 1;
+            }
+
+            &[data-ispartnextactive=true],&[data-ispartprevactive=true] {
+                visibility: visible;
+                opacity: 0.2;
+            }
+
+            $cell-border-color: rgba(25, 118, 210, 0.7);
+            li {
+                border-right: 1px solid $cell-border-color;
+                border-bottom: 1px solid $cell-border-color;
+                &:last-child {
+                    border-right: 0;
+                }
+            }
+        }
+    }
+}
