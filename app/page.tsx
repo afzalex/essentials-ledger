@@ -37,6 +37,7 @@ export default function Home() {
   const [isProcessing, setIsProcessing] = useState(false)
   const [showSplashscreen, setShowSplashscreen] = useState(true)
   const [essentialsUrl, setEssentialsUrl] = useState<string | null>(null)
+  const [logs, setLogs] = useState<string[]>([])
 
   function showError(msg: string) {
     setError(msg)
@@ -48,6 +49,7 @@ export default function Home() {
   }, [])
 
   function updatePassword(doForceUpdate=false) {
+    doForceUpdate && setLogs(l => [...l, 'DoForceUpdate'])
     getCachedData('essentials-url', async () => getEssentialsUrl(), 60*60*24*30, doForceUpdate)
     .then((url: string) => {
       setCachedData('essentials-url-recorded-timestamp', keyInfo.updatedTimestamp)
@@ -82,6 +84,9 @@ export default function Home() {
           <EssentialsFeed showError={showError} setProcessing={setIsProcessing} showSplashscreen={setShowSplashscreen} essentialsUrl={essentialsUrl} />
         </main>
       }
+      {logs && logs.length > 0 && <div>
+        {logs.map((l, lIndex)=> <div key={lIndex}>{l}</div>)}
+      </div>}
     </LocalizationProvider>
   </>);
 }
